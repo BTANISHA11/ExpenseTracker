@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #17181f;
+  color: #dddddd;
+}
+main {
+  max-width: 360px;
+  margin: 30px auto;
+}
+h1 {
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  font-size: 2.5rem;
+}
+h1 span {
+  font-size: 1rem;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 11px;
+}
+
+form {
+  margin-top: 20px;
+}
+form input {
+  width: 100%;
+  background-color: transparent;
+  color: #dddddd;
+  border: 2px solid #30313d;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+form div.basic {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+form button {
+  width: 100%;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #dddddd;
+}
+div.transactions {
+  margin-top: 10px;
+}
+div.transaction:first-child {
+  border-top: 0;
+}
+div.transaction {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-top: 1px solid #30313d;
+}
+div.transaction div.name {
+  font-size: 1rem;
+}
+div.transaction div.description {
+  font-size: 0.7rem;
+  color: #888888;
+}
+div.right {
+  text-align: right;
+}
+div.price.green {
+  color: #1c1;
+}
+div.price.red {
+  color: rgb(204, 33, 17);
+}
