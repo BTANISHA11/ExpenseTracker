@@ -1,54 +1,51 @@
 
-import './App.css';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
   const [description, setDescription] = useState("");
-  const [transactions, setTransactions] = useState("");
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
 
   async function getTransactions() {
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:3001/api" + "/transaction";
+    const url = "http://localhost:3001/api/transaction";
     const response = await fetch(url);
     return await response.json();
   }
 
-  function addNewTransaction(e) {
+  async function addNewTransaction(e) {
     e.preventDefault();
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:3001/api" + "/transaction";
-    console.log(url);
 
-    const price = name.split(" ")[0];
+    const url = "http://localhost:3001/api/transaction";
 
-    fetch(url, {
+    const price = parseFloat(name.split(" ")[0]); // Parse price as a float
+
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         price,
-        name: name.substring(price.length + 1),
+        name: name.substring(price.toString().length + 1),
         description,
         datetime,
       }),
-    }).then((response) => {
-      response.json().then((json) => {
-        setName("");
-        setDatetime("");
-        setDescription("");
-        console.log("result", json);
-      });
     });
+
+    const json = await response.json();
+    setTransactions([...transactions, json]); // Update transactions with the new entry
+
+    setName("");
+    setDatetime("");
+    setDescription("");
   }
 
   let balance = 0;
   for (const transaction of transactions) {
-    balance = balance + transaction.price;
+    balance = balance + parseFloat(transaction.price);
   }
   balance = balance.toFixed(2);
 
@@ -58,7 +55,7 @@ function App() {
         {balance}
         <span>.00</span>
       </h1>
-      <form action="" onSubmit={addNewTransaction}>
+      <form onSubmit={addNewTransaction}>
         <div className="basic">
           <input
             type="text"
@@ -91,10 +88,9 @@ function App() {
                 <div className="description">{transaction.description}</div>
               </div>
               <div className="right">
-                {/* console.log(transaction.price); */}
                 <div
                   className={
-                    "price " + (transaction.price < 0 ? "red" : "green")
+                    "price " + (parseFloat(transaction.price) < 0 ? "red" : "green")
                   }
                 >
                   {transaction.price}
