@@ -3,27 +3,48 @@ const cors = require("cors");
 require("dotenv").config();
 const Transaction = require('./models/Transaction.js');
 const { default: mongoose } = require("mongoose");
-const app = express();
 
-const url = "/api/test";
+const app = express();
 const port = 3001;
-const message = "test ok";
+
+const uri = process.env.MONGO_URL;
+
+// Function to establish a persistent connection to MongoDB
+async function connectToDatabase() {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log("MongoDB database connected successfully!");
+  } catch (error) {
+    console.error("Error connecting to MongoDB database:", error);
+    process.exit(1); // Exit the application on connection failure
+  }
+}
+
+// Connect to MongoDB before starting the server
+connectToDatabase();
 
 app.use(cors());
 app.use(express.json());
 
-app.get(url, (req, res) => {
-  res.json(message);
+// Route to handle data retrieval (GET request)
+app.get("/api/transaction", async (req, res) => {
+  try {
+    // Retrieve all transactions from MongoDB
+    const transactions = await Transaction.find();
+    res.json(transactions);
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
+// Route to handle data submission (POST request)
 app.post("/api/transaction", async (req, res) => {
   try {
-    console.log("Connecting to MongoDB database...");
-    await mongoose.connect(process.env.MONGO_URL);
-
-    console.log("MongoDB database connected successfully!");
-
-    // Check if all required fields are present in the request body
+    // Check if all required fields are present
     if (
       !req.body.name ||
       !req.body.description ||
@@ -34,33 +55,27 @@ app.post("/api/transaction", async (req, res) => {
       return;
     }
 
-    // Create a new transaction with the data from the request body
+    // Create a new transaction
     const { name, description, datetime, price } = req.body;
     const transaction = await Transaction.create({
       name,
       description,
       datetime,
-      price,
+      price
     });
 
     res.json(transaction);
   } catch (error) {
-    console.error("Error connecting to MongoDB database:", error);
+    console.error("Error creating transaction:", error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-app.get("/api/transaction", async (req, res) => {
-  await mongoose.connect(process.env.MONGO_URL);
-  const transactions = await Transaction.find();
-  res.json(transactions);
+app.listen(port, () => {
+  console.log(`App listening on port http://localhost:${port}`);
 });
 
-// Static Port
-app.listen(port);
-console.log(`App listening on port http://localhost:${port}${url}`);
-
-// // Dynamic Port
+// Dynamic Port
 // const server = app.listen(0, () => {
 //   const port = server.address().port;
 //   console.log(`App listening on port http://localhost:${port}${url}`);
