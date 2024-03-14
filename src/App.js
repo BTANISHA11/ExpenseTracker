@@ -6,23 +6,23 @@ function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
   const [description, setDescription] = useState("");
-  const [transactions, setTransactions] = useState("");
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
 
   async function getTransactions() {
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:3001/api" + "/transaction";
+    const url = (process.env.REACT_APP_API_URL + "/transaction");
+    // const url = "http://localhost:3001/api/transaction";
     const response = await fetch(url);
     return await response.json();
   }
 
   function addNewTransaction(e) {
     e.preventDefault();
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:3001/api" + "/transaction";
+    const url = (process.env.REACT_APP_API_URL + "/transaction");
+    // const url = "http://localhost:3001/api/transaction";
     console.log(url);
 
     const price = name.split(" ")[0];
@@ -48,7 +48,7 @@ function App() {
 
   let balance = 0;
   for (const transaction of transactions) {
-    balance = balance + transaction.price;
+    balance += transaction.price? transaction.price : 0;
   }
   balance = balance.toFixed(2);
 

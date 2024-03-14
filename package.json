@@ -13,14 +13,13 @@
     "mongoose": "^8.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "react-scripts start",
     "start:backend": "cd api/ && node index.js",
- 
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
