@@ -123,8 +123,8 @@ function App() {
       </form>
       <div className="transactions">
         {transactions.length > 0 &&
-          transactions.map((transaction, index) => (
-            <div key={index} className="transaction">
+          transactions.slice(1).map((transaction, index) => (
+            <div key={index} className="transaction"> 
               <div className="left">
                 <div className="name">{transaction.name}</div>
                 <div className="description">{transaction.description}</div>
