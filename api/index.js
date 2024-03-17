@@ -48,19 +48,21 @@ app.post("/api/transaction", async (req, res) => {
       !req.body.name ||
       !req.body.description ||
       !req.body.datetime ||
-      !req.body.price
+      !req.body.price||
+      !req.body.category
     ) {
       res.status(400).send("Missing required fields");
       return;
     }
 
     // Create a new transaction
-    const { name, description, datetime, price } = req.body;
+    const { name, description, datetime, price ,category} = req.body;
     const transaction = await Transaction.create({
-      name,
-      description,
-      datetime,
-      price
+      name: name,
+      description: description,
+      datetime: datetime,
+      price: price,
+      category: category,
     });
 
     res.json(transaction);

@@ -7,6 +7,8 @@ function App() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [transactions, setTransactions] = useState("");
+  const categories = ["Food", "Entertainment", "Bills", "Shopping", "Other","Coding","Courses","Sports"];
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     getTransactions().then(setTransactions);
@@ -33,6 +35,7 @@ function App() {
         price: price,
         name: name,
         description: description,
+        category: selectedCategory,
         datetime: datetime,
       }),
     }).then((response) => {
@@ -42,7 +45,9 @@ function App() {
         setDescription("");
         console.log("result", json);
       });
+      window.location.reload();
     });
+
   }
 
   let balance = 0;
@@ -106,6 +111,21 @@ function App() {
             />
             <label for="description">Enter your transaction description.</label> 
         </div> 
+        <hr></hr>
+        <div className="category">
+          <h3>Category:</h3>
+          <select
+          style={{width:'100%',background:'#17181F',color:"white",borderColor:'#30313D',padding:'5px 0',border:'1px solid #30313D',borderRadius:'10px'}}
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
         <button type="submit">Add new transaction</button>
       </form>
       <div className="transactions">
@@ -114,10 +134,12 @@ function App() {
             <div key={index} className="transaction">
               <div className="left">
                 <div className="name">{transaction.name}</div>
-                <div className="description">{transaction.description}</div>
+                {transaction.category && ( 
+                  <div className="category">Category: {transaction.category}</div>
+                )}
+                <div className="description">Description: {transaction.description}</div>
               </div>
-              <div className="right">
-                {/* console.log(transaction.price); */}
+              <div className="right"> 
                 <div
                   className={
                     "price " + (transaction.price < 0 ? "red" : "green")
