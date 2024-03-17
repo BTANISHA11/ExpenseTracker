@@ -65,6 +65,7 @@ function App() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={"Name"}
+            required
             />
           <label for="name">Enter the name of transaction.</label>  
         </div>
@@ -74,6 +75,7 @@ function App() {
           <input
             value={datetime}
             onChange={(e) => setDatetime(e.target.value)}
+            required
             type="datetime-local"
             />
           <label for="datetime">Enter the date of transaction.</label>  
@@ -86,6 +88,7 @@ function App() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             placeholder={"Price"}
+            required
             />
           <label for="price">Enter the price of transaction.</label>  
           <br></br>
@@ -95,6 +98,7 @@ function App() {
         <div className="description">
           <h3>Description :</h3>
           <input
+          required
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
