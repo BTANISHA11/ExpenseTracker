@@ -8,6 +8,19 @@ function App() {
   const [price, setPrice] = useState("");
   const [transactions, setTransactions] = useState("");
 
+  function formatDateTime(datetimeString) {
+    const dateObj = new Date(datetimeString); // Create a Date object
+    const formattedDate = dateObj.toLocaleDateString('en-GB', { // Use GB locale for DD/MM format
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const formattedTime = dateObj.toLocaleTimeString('en-US', { // Use US locale for HH:MM format
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return `${formattedDate} ${formattedTime}`;
+  }
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
@@ -125,7 +138,7 @@ function App() {
                 >
                   {transaction.price}
                 </div>
-                <div className="datetime">{transaction.datetime}</div>
+                <div className="datetime">{formatDateTime(transaction.datetime)}</div>
               </div>
             </div>
           ))}
