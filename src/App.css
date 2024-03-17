@@ -37,6 +37,11 @@ form input {
   padding: 2px 5px;
   border-radius: 5px;
 }
+
+form input[type='datetime-local'] {
+  padding: 2px;
+}
+
 form div.basic {
   display: flex;
   gap: 5px;

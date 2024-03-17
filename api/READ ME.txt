@@ -1,0 +1,4 @@
+To recreate the project , and connect to the mongodb ,
+create a new file with name ".env" in the /api/ direction
+and add this code : 
+MONGO_URL= {YOUR MONGO CONNECTION URL}
