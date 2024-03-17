@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
-
+// TODO: ERROR HANDLING ! 
   async function getTransactions() {
     const url = (process.env.REACT_APP_API_URL + "/transaction");
     // const url = "http://localhost:3001/api/transaction";
