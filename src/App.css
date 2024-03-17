@@ -43,7 +43,6 @@ form input[type='datetime-local'] {
 }
 
 form div.basic {
-  display: flex;
   gap: 5px;
   margin-bottom: 5px;
 }
