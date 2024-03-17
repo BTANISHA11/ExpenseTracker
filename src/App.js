@@ -10,6 +10,19 @@ function App() {
   const categories = ["Food", "Entertainment", "Bills", "Shopping", "Other","Coding","Courses","Sports"];
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  function formatDateTime(datetimeString) {
+    const dateObj = new Date(datetimeString); // Create a Date object
+    const formattedDate = dateObj.toLocaleDateString('en-GB', { // Use GB locale for DD/MM format
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const formattedTime = dateObj.toLocaleTimeString('en-US', { // Use US locale for HH:MM format
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return `${formattedDate} ${formattedTime}`;
+  }
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
@@ -130,8 +143,8 @@ function App() {
       </form>
       <div className="transactions">
         {transactions.length > 0 &&
-          transactions.map((transaction, index) => (
-            <div key={index} className="transaction">
+          transactions.slice(1).map((transaction, index) => (
+            <div key={index} className="transaction"> 
               <div className="left">
                 <div className="name">{transaction.name}</div>
                 {transaction.category && ( 
@@ -147,7 +160,7 @@ function App() {
                 >
                   {transaction.price}
                 </div>
-                <div className="datetime">{transaction.datetime}</div>
+                <div className="datetime">{formatDateTime(transaction.datetime)}</div>
               </div>
             </div>
           ))}
