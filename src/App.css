@@ -38,7 +38,6 @@ form input {
   border-radius: 5px;
 }
 form div.basic {
-  display: flex;
   gap: 5px;
   margin-bottom: 5px;
 }

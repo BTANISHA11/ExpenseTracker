@@ -1,11 +1,11 @@
-
-import './App.css';
+import "./App.css";
 import { useState, useEffect } from "react";
 
 function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const [transactions, setTransactions] = useState("");
 
   useEffect(() => {
@@ -60,26 +60,44 @@ function App() {
       </h1>
       <form action="" onSubmit={addNewTransaction}>
         <div className="basic">
+          <h3>Name :</h3>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={"price and name"}
-          />
+            placeholder={"Name"}
+            />
+        </div>
+          <hr></hr>
+        <div className="basic">
+          <h3>DateTime :</h3>
           <input
             value={datetime}
             onChange={(e) => setDatetime(e.target.value)}
             type="datetime-local"
-          />
+            />
         </div>
+          <hr></hr>
+        <div className="price">
+          <h3>Price :</h3>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder={"Price"}
+            />
+        </div> 
+          <hr></hr>
         <div className="description">
+          <h3>Description :</h3>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder={"description"}
-          />
-        </div>
+            placeholder={"Description"}
+            />
+            <label for="description">Enter your transaction description.</label> 
+        </div> 
         <button type="submit">Add new transaction</button>
       </form>
       <div className="transactions">
