@@ -24,17 +24,16 @@ function App() {
     const url = (process.env.REACT_APP_API_URL + "/transaction");
     // const url = "http://localhost:3001/api/transaction";
     console.log(url);
-
-    const price = name.split(" ")[0];
+ 
 
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        price,
-        name: name.substring(price.length + 1),
-        description,
-        datetime,
+        price: price,
+        name: name,
+        description: description,
+        datetime: datetime,
       }),
     }).then((response) => {
       response.json().then((json) => {
@@ -85,7 +84,7 @@ function App() {
           <input
             type="number"
             value={price}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setPrice(e.target.value)}
             placeholder={"Price"}
             />
           <label for="price">Enter the price of transaction.</label>  

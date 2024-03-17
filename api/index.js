@@ -43,8 +43,7 @@ app.get("/api/transaction", async (req, res) => {
 
 // Route to handle data submission (POST request)
 app.post("/api/transaction", async (req, res) => {
-  try {
-    // Check if all required fields are present
+  try { 
     if (
       !req.body.name ||
       !req.body.description ||
