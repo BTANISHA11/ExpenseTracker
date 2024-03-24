@@ -3,11 +3,20 @@ const cors = require("cors");
 require("dotenv").config();
 const Transaction = require('./models/Transaction.js');
 const { default: mongoose } = require("mongoose");
+const UserRoute = require('./routes/userRoutes.js');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3001;
-
 const uri = process.env.MONGO_URL;
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
+app.use(express.json());
+
+// route for user login && signup
+app.use('/api', UserRoute);
 
 // Function to establish a persistent connection to MongoDB
 async function connectToDatabase() {
@@ -22,12 +31,9 @@ async function connectToDatabase() {
     process.exit(1); // Exit the application on connection failure
   }
 }
-
 // Connect to MongoDB before starting the server
 connectToDatabase();
 
-app.use(cors());
-app.use(express.json());
 
 // Route to handle data retrieval (GET request)
 app.get("/api/transaction", async (req, res) => {
