@@ -1,4 +1,4 @@
-import "./App.css";
+import "../App.css";
 import { useState, useEffect } from "react";
 
 function ExpenseTracker() {
@@ -139,7 +139,7 @@ function ExpenseTracker() {
             ))}
           </select>
         </div>
-        <button type="submit">Add new transaction</button>
+        <button className="bg-slate-100 text-black font-bold" type="submit">Add new transaction</button>
       </form>
       <div className="transactions">
         {transactions.length > 0 &&
